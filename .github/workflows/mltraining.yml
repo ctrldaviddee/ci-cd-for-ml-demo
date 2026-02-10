@@ -13,17 +13,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        run: actions/checkout@v4
+        uses: actions/checkout@v4
 
       - name: Setup python
-        run: actions/setup-python@v6
+        uses: actions/setup-python@v6
         with:
-          python-version: 3.14
+          python-version: 3.13
 
       - name: Setup CML
         uses: iterative/setup-cml@v2
 
-      - name: Trin model
+      - name: Train model
         run: |
           pip install -r requirements.txt
           cd src

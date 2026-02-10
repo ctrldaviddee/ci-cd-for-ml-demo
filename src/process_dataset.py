@@ -60,16 +60,7 @@ def target_encode_categorical_features(df: pd.DataFrame, categorical_columns: li
 
 def impute_and_scale_data(df_features: pd.DataFrame) -> pd.DataFrame:
     """
-    Imputes numerical data to its mean value
-    and then scales the data to a normal distribution
-
-    Parameters:
-    filename (str): raw data filename
-    drop_columns (List[str]): column names that will be dropped
-    target_column (str): name of target column
-
-    Returns:
-    pd.Dataframe: Imputed and Scaled dataframe
+    df_features (pd.DataFrame): DataFrame containing only feature columns
     """
 
     # Impute data with mean strategy
@@ -89,7 +80,7 @@ def main():
 
     # Target encode categorical columns
     # results in all columns becoming numerical
-    categorical_columns = weather.select_dtypes(include='str').columns.to_list()
+    categorical_columns = weather.select_dtypes(include=[object]).columns.to_list()
     weather = target_encode_categorical_features(df=weather, categorical_columns=categorical_columns,
                                                  target_column=TARGET_COLUMN)
 
