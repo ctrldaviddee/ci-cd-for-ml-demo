@@ -11,7 +11,7 @@ PROCESSED_DATASET = "processed_dataset/weather.csv"
 def delete_and_recreate_dir(path):
     try:
         shutil.rmtree(path)
-    except:
+    except FileNotFoundError:
         pass
     finally:
         Path(path).mkdir(parents=True, exist_ok=True,)
