@@ -1,0 +1,42 @@
+name: model-training
+  
+on:
+  push-request:
+     branches: main
+
+permissions: write-all
+
+jobs:
+  train_and_report_eval_performance:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        run: actions/checkout@v4
+
+      - name: Setup python
+        run: actions/setup-python@v6
+        with:
+          python-version: 3.14
+
+      - name: Setup CML
+        uses: iterative/setup-cml@v2
+
+      - name: Trin model
+        run: |
+          pip install -r requirements.txt
+          cd src
+          python preprocess_dataset.py
+          python train.py
+
+      - name: Write CML report
+        env:
+          REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # Add metrics data to markdown
+          cat metrics.json >> model_eval_report.md
+          
+          # Add confusion matrix to markdown file
+          echo "![confusion matrix plot](./confusion_matrix.png)" >> report.md
+          
+          # Create comment from markdown report
+          cml comment create model_eval_report.md
