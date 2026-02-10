@@ -3,8 +3,8 @@ name: model-training
 on:
   pull_request:
      branches: main
-  push:
-    branches: ["pr-workflow"]
+  #push:
+  #  branches: ["pr-workflow"]
 
 permissions: write-all
 
@@ -26,9 +26,8 @@ jobs:
       - name: Train model
         run: |
           pip install -r requirements.txt
-          cd src
-          python process_dataset.py
-          python train.py
+          python src/process_dataset.py
+          python src/train.py
 
       - name: Write CML report
         env:
