@@ -1,5 +1,8 @@
 # # This is a basic workflow to help you get started with Actions
-
+# -permissions: write-all
+# +permissions:
+# +  contents: read
+# +  pull-requests: write
 # name: CI
 
 # # Controls when the workflow will run

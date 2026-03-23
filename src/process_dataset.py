@@ -27,6 +27,8 @@ def read_dataset(filename: str, drop_columns: list[str], target_column: str) -> 
 
     df = pd.read_csv(filepath_or_buffer=filename).drop(columns=drop_columns,)
     df[target_column] = df[target_column].map({"Yes": 1, "No": 0})
+    if df[target_column].isna().any():
+        raise ValueError(f"Unexpected values in '{target_column}' column. Expected only 'Yes'/'No'.")
     return df
 
 
